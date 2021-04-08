@@ -467,7 +467,7 @@
                               background-color: #ffffff;
                               padding-left:10px;
                               padding-right:10px;
-                              
+                              padding-top: 20px;
                               border: 1px solid #dde0eb;
                               ">
 									<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="85%" style="margin:auto">
@@ -528,8 +528,8 @@
 						</tr> {%endif%} {%endif%}
 						<tr>
 							<td>
-								<div style="border-radius: 5px;margin: 10px 6% 10px;margin-bottom: 0px;padding-bottom: 15px;background-color: #ffffff;padding-top: 20px;text-align:center;border: 1px solid #dde0eb;">
-									<h2 style="color: #404255; text-align:center;font-size:16px;font-weight:800px;margin-bottom:8px;">
+								<div style="border-radius: 5px;margin: 10px 6% 10px;margin-bottom: 0px;margin-top: 10px;padding-bottom: 15px;background-color: #ffffff;padding-top: 20px;text-align:center;border: 1px solid #dde0eb;">
+									<h2 style="color: #404255; text-align:center;font-size:16px;font-weight:800px;margin-bottom:0px;">
                               Current Open Pipeline
                            </h2>
 
@@ -546,27 +546,16 @@
                        <span style="color:#000000;font-size:14px;"><b>N/A</b></span>
                        {% endif%}
                        <span style="color:#000000;font-size:14px;"><b>Current Coverage Ratio</b></span>
-                                        </div>
-                                     {% if persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio>0 %}
-									  <div>
+                     </div>
+                     {% if persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio>0 %}
+										<div>
                        <span style="color:#3abf8f;font-size:14px;"><b>{{persona.current_pipeline_global_coverage_ratio}}x</b></span>
                       {%elif persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio	<=0 %}
 										 <span style="color:#e35862;font-size:14px;"><b>{{persona.current_pipeline_global_coverage_ratio}}x</b></span>
                      {%else %}
                      <span style="color:#000000;font-size:14px;"><b>N/A</b></span>
                      {%endif%}
-                                     <span style="color:#000000;font-size:14px;"><b>Company Coverage Ratio</b></span> 
-									  </div>
-									  <div>
-										<span style="color:#3abf8f;font-size:14px;"><b>{{persona.current_pipeline_past_coverage_ratio}}x</b></span>
-										{%elif persona.current_pipeline_past_coverage_ratio!='n/a' and persona.current_pipeline_past_coverage_ratio	<=0 %}
-														   <span style="color:#e35862;font-size:14px;"><b>{{persona.current_pipeline_past_coverage_ratio}}x</b> </span>
-									   {%else %}
-									   <span style="color:#000000;font-size:14px;"><b>N/A</b></span>
-									   {%endif%}
-													   <span style="color:#000000;font-size:14px;"><b>Past Coverage Ratio</b></span> 
-									  </div>
-					                 
+                     <span style="color:#000000;font-size:14px;"><b>Company Coverage Ratio</b></span> </div>
 									</div>
 								</div>
 
@@ -684,6 +673,7 @@
 								</div>
 							</td>
 						</tr> {%endif%}
+                       {% if persona.deal_engagement_metrics and persona.deal_engagement_metrics|length > 0 %}
 						<tr>
 							<td>
 								<div style="border-radius: 5px;margin: 10px 6% 10px;margin-bottom: 0px;margin-top: 10px;padding-top:0px;padding-bottom: 15px;background-color: #ffffff;text-align:center;border: 1px solid #dde0eb;">
@@ -691,7 +681,8 @@
                                  Engagement Metrics
                               </h2>
 									<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="85%" style="margin:auto;">
-										<col width="20%"> {% for deal in persona.deal_engagement_metrics %}
+										<col width="20%"> 
+										{% for deal in persona.deal_engagement_metrics %}
 											<tr>
 												<td style="padding-bottom:15px;">
 													<div style="font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;text-align:left;"> <a href="{{deal.deal_link}}" style="color:#0991cc;text-decoration:none;">{{deal.name}}</a> </div>
@@ -731,6 +722,8 @@
 								</div>
 							</td>
 						</tr> 
+                        {%endif%}
+
 						{% if persona.deals_this_week.deals|length>0%}
 						<tr>
 							<td>
@@ -899,7 +892,8 @@
 							</td>
 						</tr> {% endif %}
 						<!--Begin: Deal Insights Section-->
-						{% if persona.deal_insights and persona.deal_insights|length>0%}
+						
+						{% if  persona.deal_insights and persona.deal_insights|length>0%}
 						<tr>
 							<td>
 								<div style="border-radius: 5px;margin: 10px 6% 10px;margin-top:10px;padding-bottom: 15px;background-color: #ffffff;border: 1px solid #dde0eb;">
@@ -910,7 +904,7 @@
 													<p style="color:#404255;font-size:18px;text-align:center;margin-top:16px;margin-bottom: 24px;font-weight:bold;"> Deal Insights </p>
 												</td>
 											</tr>
-                      {% for deal in persona.deal_insights %}
+                                               {% for deal in persona.deal_insights %}
 											<tr>
 												<td style="word-wrap:normal;">
 													<div style="display:inline-flex;width:100%;margin-bottom:15px;display:center;"> <img style="height:32px;width:32px;display:inline-flex;vertical-align:top;margin-left:10px;margin-right:10px;" src="https://aviso-email-images.s3.amazonaws.com/win_scores/{{deal.aviso_score|int}}.png">
@@ -948,7 +942,8 @@
 								</table>
 								</div>
 							</td>
-						</tr> {%endif%}
+						</tr> 
+						{%endif%}
 						<!--End: Deal Insights Section-->{%endif%}
                           {% if persona.persona_type == 'FLM' %}
 						<tr>
@@ -1081,16 +1076,6 @@
                          <span style="color:#000000;font-size:14px;"><b>N/A</b></span>
                          {%endif%}
                          <span style="color:#000000;font-size:14px;"><b>Company Coverage Ratio</b></span> </div>
-
-						 <div>
-							<span style="color:#3abf8f;font-size:14px;"><b>{{persona.current_pipeline_past_coverage_ratio}}x</b></span>
-							{%elif persona.current_pipeline_past_coverage_ratio!='n/a' and persona.current_pipeline_past_coverage_ratio	<=0 %}
-							<span style="color:#e35862;font-size:14px;"><b>{{persona.current_pipeline_past_coverage_ratio}}x</b> </span>
-						   {%else %}
-						   <span style="color:#000000;font-size:14px;"><b>N/A</b></span>
-						   {%endif%}
-										   <span style="color:#000000;font-size:14px;"><b>Past Coverage Ratio</b></span> 
-						  </div>
 											<div style="width: 93%; border-bottom: 1px solid #C7CBD6; margin: 0 auto;padding-top:15px;"> </div>
 										</div>
 
@@ -1237,55 +1222,7 @@
                                  </a> </p>
 								</div>
 							</td>
-						</tr> {%endif%} 
-						<tr>
-							<td>
-								<div style="border-radius: 5px;margin: 10px 6% 10px;margin-bottom: 0px;margin-top: 10px;padding-top:0px;padding-bottom: 15px;background-color: #ffffff;text-align:center;border: 1px solid #dde0eb;">
-									<h2 style="color: #404255; text-align:center;font-size:18px;font-weight:bold;margin-bottom:27px;margin-top:16px;">
-                                 Engagement Metrics
-                              </h2>
-									<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="85%" style="margin:auto;">
-										<col width="20%"> {% for deal in persona.reportee_engagement_metrics %}
-											<tr>
-												<td style="padding-bottom:15px;">
-													<div style="font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;text-align:left;"> <a href="{{deal.deal_link}}" style="color:#0991cc;text-decoration:none;">{{deal.name}}</a> </div>
-												</td>
-												<td style="vertical-align:top;"> <img src="https://aviso-email-images.s3.amazonaws.com/calendar-alt.png">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.calendar}} </div>
-												</td>
-												<td style="vertical-align:top;">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.email_out}} </div> <img src="https://aviso-email-images.s3.amazonaws.com/arrow-up.png"> <img src="https://aviso-email-images.s3.amazonaws.com/envelope.png"> <img src="https://aviso-email-images.s3.amazonaws.com/arrow-down.png">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.email_in}} </div>
-												</td>
-												<td style="vertical-align:top;"> <img src="https://aviso-email-images.s3.amazonaws.com/user-tie.png">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.interactions}} </div>
-												</td>
-												<td style="vertical-align:top;"> <img src="https://aviso-email-images.s3.amazonaws.com/sack-dollar.png">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.committed_amount}} </div>
-												</td>
-											</tr> {% endfor %} </table>
-									<div>
-										<div style="width: 85%; border-bottom: 1px solid #c7cbd6; margin: 0 auto;"></div>
-										<div style="display:flex;width:85%;margin-left:85px;">
-											<div style="color:#404255;font-size:10px;font-weight:normal;margin:3%;"> <img src="https://aviso-email-images.s3.amazonaws.com/calendar-alt.png">
-												<div style="padding-top:3px;">Meetings</div>
-											</div>
-											<div style="color:#404255;font-size:10px;font-weight:normal;margin:3%;padding-top:2px;"> <img src="https://aviso-email-images.s3.amazonaws.com/envelope.png">
-												<div style="padding-top:6px;">Emails</div>
-											</div>
-											<div style="color:#404255;font-size:10px;font-weight:normal;margin:3%;"> <img src="https://aviso-email-images.s3.amazonaws.com/user-tie.png">
-												<div style="padding-top:3px">Exec Touched</div>
-											</div>
-											<div style="color:#404255;font-size:10px;font-weight:normal;margin:3%;"> <img src="https://aviso-email-images.s3.amazonaws.com/sack-dollar.png">
-												<div style="padding-top:3px">Amt. In commit
-													<br> Or Best Case</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr> 
-						{% if persona.meetings|length > 0 %}
+						</tr> {%endif%} {% if persona.meetings|length > 0 %}
 						<tr>
 							<td>
 								<div style="border-radius: 5px;margin: 10px 6% 10px;margin-top:10px;padding-bottom: 15px;background-color: #ffffff;padding-left:80px;padding-right:80px;padding-top: 20px;border: 1px solid #dde0eb;">
@@ -1684,27 +1621,17 @@
                         {%else %}
                           <span style="color:#000000;font-size:14px;font-weight:600;"><b>N/A</b></span>
                         {% endif %}
-                        <span style="color:#000000;font-size:14px;"><b>Current Coverage Ratio</b></span> 
-					                        </div>
+                        <span style="color:#000000;font-size:14px;"><b>Current Coverage Ratio</b></span> </div>
 											<div>
-											{% if persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio>0 %}
-											<span style="color:#3abf8f;font-size:14px;font-weight:600;"><b>{{persona.current_pipeline_global_coverage_ratio}}x</b></span>
-											{%elif persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio<=0  %}
-											<span style="color:#e35862;font-size:14px;font-weight:600;"><b>{{persona.current_pipeline_global_coverage_ratio}}x</b></span>
-											{%else%}
-											<span style="color:#000000;font-size:14px;font-weight:600;"><b>N/A</b></span>
-											{% endif %}
-											<span style="color:#000000;font-size:14px;"><b>Company Coverage Ratio</b></span>
-                                            </div>
-											<div>
-												<span style="color:#3abf8f;font-size:14px;"><b>{{persona.current_pipeline_past_coverage_ratio}}x</b></span>
-												{%elif persona.current_pipeline_past_coverage_ratio!='n/a' and persona.current_pipeline_past_coverage_ratio	<=0 %}
-																   <span style="color:#e35862;font-size:14px;"><b>{{persona.current_pipeline_past_coverage_ratio}}x</b> </span>
-											   {%else %}
-											   <span style="color:#000000;font-size:14px;"><b>N/A</b></span>
-											   {%endif%}
-															   <span style="color:#000000;font-size:14px;"><b>Past Coverage Ratio</b></span> 
-											  </div>
+                        {% if persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio>0 %}
+                        <span style="color:#3abf8f;font-size:14px;font-weight:600;"><b>{{persona.current_pipeline_global_coverage_ratio}}x</b></span>
+                        {%elif persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio<=0  %}
+                        <span style="color:#e35862;font-size:14px;font-weight:600;"><b>{{persona.current_pipeline_global_coverage_ratio}}x</b></span>
+                        {%else%}
+                        <span style="color:#000000;font-size:14px;font-weight:600;"><b>N/A</b></span>
+                        {% endif %}
+                        <span style="color:#000000;font-size:14px;"><b>Company Coverage Ratio</b></span>
+                      </div>
 											<div style="width: 93%; border-bottom: 1px solid #C7CBD6; margin: 0 auto;padding-top:15px;"> </div>
 										</div>
 										<div style="color:#6f7288;padding-top:15px;font-weight:600;font-size:12px;text-align:center;"> Open Pipeline since last week broken down by directs reports </div>
@@ -1769,8 +1696,8 @@
 											<div style="margin-top:15px;margin-left:15px;margin-bottom:15px;font-weight:600;font-size: 12px;color: #404255;display:flex;align-items:center;width:338px;">
 												<div style="width:30%">AT RISK</div>
 												<div style="width:80%;text-align:right;"> <span style="font-size: 14px;font-weight: bold;color: #404255;">{{persona.at_risk_deals.count}}</span> <span style="font-size: 16px;font-weight: 400;">deals</span> <span style="display: inline-block;border-radius: 50%;width: 5px;height: 5px;background-color: #4d4d4d;margin-right: 10px; margin-left: 10px;margin-bottom: 5px;vertical-align: middle;"></span> <span style="font-size: 14px; font-weight: bold;color:#d60651;">
-                                                {{persona.at_risk_deals.amount}}
-                                               </span> </div>
+                     {{persona.at_risk_deals.amount}}
+                     </span> </div>
 											</div>
 										</div> {% for deal in persona.at_risk_deals.deals %}
 										<div style="display: flex; margin-left: auto;margin-right: auto; height:100%;width:86%;box-sizing:border-box;border:1px solid #dde0eb;border-top: 0px;padding: 20px 16px; border-radius:6px; background-color: #ffffff;border-top-right-radius: 0px;border-top-left-radius: 0px;">
@@ -1851,57 +1778,7 @@
                      </a> </p>
 								</div>
 							</td>
-						</tr> {%endif%} 
-
-						<tr>
-							<td>
-								<div style="border-radius: 5px;margin: 10px 6% 10px;margin-bottom: 0px;margin-top: 10px;padding-top:0px;padding-bottom: 15px;background-color: #ffffff;text-align:center;border: 1px solid #dde0eb;">
-									<h2 style="color: #404255; text-align:center;font-size:18px;font-weight:bold;margin-bottom:27px;margin-top:16px;">
-                                 Engagement Metrics
-                              </h2>
-									<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="85%" style="margin:auto;">
-										<col width="20%"> {% for deal in persona.reportee_engagement_metrics %}
-											<tr>
-												<td style="padding-bottom:15px;">
-													<div style="font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;text-align:left;"> <a href="{{deal.deal_link}}" style="color:#0991cc;text-decoration:none;">{{deal.name}}</a> </div>
-												</td>
-												<td style="vertical-align:top;"> <img src="https://aviso-email-images.s3.amazonaws.com/calendar-alt.png">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.calendar}} </div>
-												</td>
-												<td style="vertical-align:top;">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.email_out}} </div> <img src="https://aviso-email-images.s3.amazonaws.com/arrow-up.png"> <img src="https://aviso-email-images.s3.amazonaws.com/envelope.png"> <img src="https://aviso-email-images.s3.amazonaws.com/arrow-down.png">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.email_in}} </div>
-												</td>
-												<td style="vertical-align:top;"> <img src="https://aviso-email-images.s3.amazonaws.com/user-tie.png">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.interactions}} </div>
-												</td>
-												<td style="vertical-align:top;"> <img src="https://aviso-email-images.s3.amazonaws.com/sack-dollar.png">
-													<div style="color:#0991cc;font-size: 12px;font-weight: bold;font-stretch: normal;font-style: normal;display:inline-flex;vertical-align:top;"> {{deal.committed_amount}} </div>
-												</td>
-											</tr> {% endfor %} </table>
-									<div>
-										<div style="width: 85%; border-bottom: 1px solid #c7cbd6; margin: 0 auto;"></div>
-										<div style="display:flex;width:85%;margin-left:85px;">
-											<div style="color:#404255;font-size:10px;font-weight:normal;margin:3%;"> <img src="https://aviso-email-images.s3.amazonaws.com/calendar-alt.png">
-												<div style="padding-top:3px;">Meetings</div>
-											</div>
-											<div style="color:#404255;font-size:10px;font-weight:normal;margin:3%;padding-top:2px;"> <img src="https://aviso-email-images.s3.amazonaws.com/envelope.png">
-												<div style="padding-top:6px;">Emails</div>
-											</div>
-											<div style="color:#404255;font-size:10px;font-weight:normal;margin:3%;"> <img src="https://aviso-email-images.s3.amazonaws.com/user-tie.png">
-												<div style="padding-top:3px">Exec Touched</div>
-											</div>
-											<div style="color:#404255;font-size:10px;font-weight:normal;margin:3%;"> <img src="https://aviso-email-images.s3.amazonaws.com/sack-dollar.png">
-												<div style="padding-top:3px">Amt. In commit
-													<br> Or Best Case</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr> 
-						
-						{% if persona.meetings|length > 0 %}
+						</tr> {%endif%} {% if persona.meetings|length > 0 %}
 						<tr>
 							<td>
 								<div style="border-radius: 5px;margin: 10px 6% 10px;margin-top:10px;padding-bottom: 15px;background-color: #ffffff;padding-left:80px;padding-right:80px;padding-top: 20px;border: 1px solid #dde0eb;">
@@ -2356,12 +2233,11 @@
                         border-radius: 4px;
                         margin: 10px 6% 10px;
                         margin-bottom:0px;
-						padding-top:20px;
                         padding-bottom: 15px;
                         background-color: #ffffff;
                         border: 1px solid #dde0eb;
                         ">
-									<p style="color: #404255; text-align: center; font-size: 16px;font-weight: bolder;margin-bottom:8px;margin-top:16px;"> Current Open Pipeline</p>
+									<p style="color: #404255; text-align: center; font-size: 18px;font-weight: bolder;margin-bottom:8px;margin-top:16px;"> Current Open Pipeline</p>
 									<div align="center">
 										<div style="text-align:center;"> <span style="font-weight:600;padding-right:10px;font-size:18px;">
                      {{persona.current_pipeline_deals}} Deals</span> <span style="width:7px;height:7px;background-color: black;border-radius:50%;display: inline-block;vertical-align:text-top;"></span> <span style="font-size:20px;font-weight:bold;font-style:normal;padding-left:10px;">{{persona.current_pipeline_amount}}</span> </div>
@@ -2375,8 +2251,8 @@
                          <span style="color:#000000;font-size:14px;"><b>N/A</b></span>
                          {% endif%}
                          <span style="color:#000000;font-size:14px;"><b>Current Coverage Ratio</b></span>
-                                            </div>
-                                        {% if persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio>0 %}
+                        </div>
+                         {% if persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio>0 %}
 											<div>
                         <span style="color:#3abf8f;font-size:14px;"><b>{{persona.current_pipeline_global_coverage_ratio}}x</b></span>
                         {%elif persona.current_pipeline_global_coverage_ratio!='n/a' and persona.current_pipeline_global_coverage_ratio<=0 %}
@@ -2384,19 +2260,8 @@
                         {%else%}
                         <span style="color:#000000;font-size:14px;"><b>N/A</b></span>
                          {%endif%}
-                                               <span style="color:#000000;font-size:14px;"><b>Company Coverage Ratio</b></span> 
-											</div>
-											<div>
-												<span style="color:#3abf8f;font-size:14px;"><b>{{persona.current_pipeline_past_coverage_ratio}}x</b></span>
-												{%elif persona.current_pipeline_past_coverage_ratio!='n/a' and persona.current_pipeline_past_coverage_ratio	<=0 %}
-																   <span style="color:#e35862;font-size:14px;"><b>{{persona.current_pipeline_past_coverage_ratio}}x</b> </span>
-											   {%else %}
-											   <span style="color:#000000;font-size:14px;"><b>N/A</b></span>
-											   {%endif%}
-															   <span style="color:#000000;font-size:14px;"><b>Past Coverage Ratio</b></span> 
-											  </div>
+                         <span style="color:#000000;font-size:14px;"><b>Company Coverage Ratio</b></span> </div>
 											<div style="width: 93%; border-bottom: 1px solid #C7CBD6; margin: 0 auto;padding-top:15px;"> </div>
-											
 										</div>
 										<div style="color:#6f7288;padding-top:15px;font-weight:600;font-size:12px;text-align:center;"> Open Pipeline since last week broken down by directs reports </div> {% if persona.direct_report_summary %}
 										<table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" width="90%">
