@@ -899,7 +899,7 @@
 							</td>
 						</tr> {% endif %}
 						<!--Begin: Deal Insights Section-->
-						{% if persona.deal_insights|length>0%}
+						{% if persona.deal_insights and persona.deal_insights|length>0%}
 						<tr>
 							<td>
 								<div style="border-radius: 5px;margin: 10px 6% 10px;margin-top:10px;padding-bottom: 15px;background-color: #ffffff;border: 1px solid #dde0eb;">
